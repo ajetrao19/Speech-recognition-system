@@ -1,0 +1,37 @@
+ // Pin 8 is connected to the LED
+int led = 8;
+
+void setup() {
+  pinMode(led, OUTPUT); // Set LED pin as output
+  
+  // Start Serial communication
+  Serial.begin(9600);
+  Serial.println("Speech recognition system");
+  Serial.println("Say ON to turn on the LED");
+  Serial.println("Say OFF to turn off the LED");
+  Serial.println("Say BYE to exit");
+}
+
+void loop() {
+  // Check if data is available on the Serial port
+  if (Serial.available()) {
+    String command = Serial.readString(); // Read the command
+    command.trim(); // Remove whitespace and newline characters
+
+    if (command == "ON") {
+      digitalWrite(led, HIGH); // Turn LED ON
+      Serial.println("LED is turned ON");
+    } 
+    else if (command == "OFF") {
+      digitalWrite(led, LOW); // Turn LED OFF
+      Serial.println("LED is turned OFF");
+    } 
+    else if (command == "BYE") {
+      Serial.println("Goodbye");
+      while (true); // Stop the program
+    } 
+    else {
+      Serial.println("Invalid command, please type ON, OFF, or BYE");
+    }
+  }
+}
